@@ -5,26 +5,20 @@ import utilities.*;
 import java.util.Objects;
 
 public class Rich extends Person {
-    private double money = Math.random() * 100000000;
+    private double money;
 
     public Rich(String name) {
         super(name);
+        this.money = Math.round(Math.random() * 1000000);
+        joinStory();
     }
 
     public void spendMoney() {
         money -= Math.random() * 10000;
     }
 
-    @Override
-    public void walkBy(WalkablePlace place) {
-        System.out.println("Богач прогуливается в месте '" + place.getName() + "'");
-        place.addWalker(this);
-    }
-
-    @Override
-    public void stopWalking(WalkablePlace place) {
-        System.out.println(getName() + " нагулялся");
-        place.deleteWalker(this);
+    private void joinStory() {
+        System.out.println("Богач '" + getName() + "' присоединился к истории.");
     }
 
     @Override
