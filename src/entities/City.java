@@ -15,7 +15,7 @@ public class City implements Observable {
     private boolean goodWeather;
 
     public City(String name) throws InvalidNameException {
-        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+        if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
             throw new InvalidNameException("Название города некорректно");
         } else {
             this.name = name;
