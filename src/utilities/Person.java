@@ -12,7 +12,7 @@ public abstract class Person implements ObjectInterface {
     private City home;
 
     public Person(String name) throws InvalidNameException {
-        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+        if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
             throw new InvalidNameException("Имя персонажа некорректно");
         } else {
             this.name = name;
