@@ -1,21 +1,16 @@
 package entities;
 
+import exceptions.InvalidNameException;
+import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
 
 public class CommonRestaurant extends RestaurantAbstract {
-    private StreetSideType streetSide;
 
     public CommonRestaurant(String name) {
         super(name);
         setCommon(true);
-        joinStory();
-    }
-
-    public CommonRestaurant(String name, StreetSideType streetSide) {
-        super(name);
-        this.streetSide = streetSide;
         joinStory();
     }
 
@@ -33,13 +28,17 @@ public class CommonRestaurant extends RestaurantAbstract {
     }
 
     @Override
-    public void getOutsideServiceAvialability(MainCharacter waiter) {
-        if (this.hasOutsideService()) {
-            System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
-            Driver driver = new Driver("Олег");
-            driver.beHappy(waiter);
+    public void getOutsideServiceAvialability(MainCharacter waiter) throws NullObjectException {
+        if (waiter == null) {
+            throw new NullObjectException("В метод getOutsideServiceAvialability передан пустой объект");
         } else {
-            System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
+            if (this.hasOutsideService()) {
+                System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
+                Driver driver = new Driver("Олег");
+                driver.beHappy(waiter);
+            } else {
+                System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
+            }
         }
     }
 
@@ -49,24 +48,8 @@ public class CommonRestaurant extends RestaurantAbstract {
     }
 
     @Override
-    public void setStreetSide(StreetSideType ss) {
-        streetSide = ss;
-    }
-
-    @Override
-    public StreetSideType getStreetSide() {
-        return streetSide;
-    }
-
-    @Override
     public String toString() {
-        if (streetSide.equals(StreetSideType.LEFT_SIDE)) {
-            return "Common Restaurant '" + getName() + "', street side: LEFT";
-        }
-        if (streetSide.equals(StreetSideType.RIGHT_SIDE)) {
-            return "Common Restaurant '" + getName() + "', street side: RIGHT";
-        }
-        return "UNDETECTED";
+        return "Common restaurant '" + getName() + "'";
     }
 
     @Override
@@ -76,11 +59,11 @@ public class CommonRestaurant extends RestaurantAbstract {
         if (getClass() != obj.getClass()) return false;
         CommonRestaurant rest = (CommonRestaurant) obj;
 
-        return getName().equals(rest.getName()) && streetSide.equals(rest.streetSide);
+        return getName().equals(rest.getName());
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + Objects.hash(streetSide);
+        return super.hashCode();
     }
 }
