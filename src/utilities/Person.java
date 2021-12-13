@@ -2,6 +2,8 @@ package utilities;
 
 import entities.*;
 import exceptions.HasNotHomeException;
+import exceptions.InvalidNameException;
+import exceptions.NullObjectException;
 
 import java.util.Objects;
 
@@ -9,17 +11,36 @@ public abstract class Person implements ObjectInterface {
     private final String name;
     private City home;
 
-    public Person(String name) {
-        this.name = name;
+    public Person(String name) throws InvalidNameException {
+        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+            throw new InvalidNameException("Имя персонажа некорректно");
+        } else {
+            this.name = name;
+        }
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public abstract void walkBy(WalkablePlace place);
+    public void stopWalking(WalkablePlace place) throws NullObjectException {
+        if (place == null) {
+            throw new NullObjectException("В метод walkBy передан пустой объект");
+        } else {
+            System.out.println(getName() + " нагулялся");
+            place.deleteWalker(this);
+        }
+    }
 
-    public abstract void stopWalking(WalkablePlace place);
+    public void walkBy(WalkablePlace place) throws NullObjectException {
+        if (place == null) {
+            throw new NullObjectException("В метод walkBy передан пустой объект");
+        } else {
+            System.out.println(getName() + " начал гулять в месте: '" + place.getName() + "'");
+            place.addWalker(this);
+        }
+    }
 
     public void setHome(City city) {
         this.home = city;
