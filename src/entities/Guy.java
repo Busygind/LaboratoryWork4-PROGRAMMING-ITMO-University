@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
@@ -59,20 +60,12 @@ public class Guy extends Person {
 
     }
 
-    public void changeLocation(Observable loc) {
-        this.location = loc;
-    }
-
-    @Override
-    public void walkBy(WalkablePlace place) {
-        System.out.println(getName() + " начал гулять в месте: '" + place.getName() + "'");
-        place.addWalker(this);
-    }
-
-    @Override
-    public void stopWalking(WalkablePlace place) {
-        System.out.println(getName() + " нагулялся");
-        place.deleteWalker(this);
+    public void changeLocation(Observable loc) throws NullObjectException {
+        if (loc == null) {
+            throw new NullObjectException("В метод changeLocation передан пустой объект");
+        } else {
+            this.location = loc;
+        }
     }
 
     @Override
