@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.InvalidNameException;
 import utilities.*;
 
 import java.util.ArrayList;
@@ -7,18 +8,26 @@ import java.util.ArrayList;
 public class Sea implements Observable {
     private final String name;
 
-    public Sea(String name) {
-        this.name = name;
-        joinStory();
+    public Sea(String name) throws InvalidNameException {
+        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+            throw new InvalidNameException("Название моря некорректно");
+        } else {
+            this.name = name;
+            joinStory();
+        }
     }
 
     public class Bay implements Observable {
         private final String name;
         private final ArrayList<City> coastalCities = new ArrayList<>();
 
-        public Bay(String name) {
-            this.name = name;
-            joinStory();
+        public Bay(String name) throws InvalidNameException {
+            if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+                throw new InvalidNameException("Название залива некорректно");
+            } else {
+                this.name = name;
+                joinStory();
+            }
         }
 
         public void addCityOnCoast(City city) {
