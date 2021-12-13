@@ -1,10 +1,9 @@
 package entities;
 
-import exceptions.ToManyRichesException;
+import exceptions.*;
 import utilities.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -12,15 +11,18 @@ public class City implements Observable {
     private final String name;
     private ArrayList<Person> citizens = new ArrayList<>();
     private ArrayList<Street> streets = new ArrayList<>();
-    private Rich[] riches = new Rich[8];
     private boolean beMostBeatiful;
     private boolean goodWeather;
 
-    public City(String name) {
-        this.name = name;
-        setBeauty();
-        setWeather();
-        joinStory();
+    public City(String name) throws InvalidNameException {
+        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+            throw new InvalidNameException("Название города некорректно");
+        } else {
+            this.name = name;
+            setBeauty();
+            setWeather();
+            joinStory();
+        }
     }
 
     public void setBeauty() {
@@ -29,31 +31,46 @@ public class City implements Observable {
         }
     }
 
-    static int countOfRiches = 0;
-
-    public void addCitizen(Person citizen) throws ToManyRichesException {
-        try {
+    public void addCitizen(Person citizen) throws NullObjectException, ToManyCitizensException {
+        final int MAX_COUNT_OF_CITIZENS = 5;
+        if (citizen == null) {
+            throw new NullObjectException("В метод addCitizen передан пустой объект");
+        } else if (citizens.toArray().length == MAX_COUNT_OF_CITIZENS) {
+            throw new ToManyCitizensException("Город '" + getName() + "' переполнен!");
+        } else {
             citizens.add(citizen);
-            if (citizen instanceof Rich) {
-                riches[countOfRiches] = (Rich) citizen;
-                countOfRiches += 1;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ToManyRichesException("В этом городе уже хватает богачей");
+            System.out.println("В городе '" + getName() + "' новый житель: '" + citizen.getName() + "'");
         }
     }
 
-    public void deleteCitizen(Person citizen) {
-        citizens.remove(citizen);
+    public void deleteCitizen(Person citizen) throws NullObjectException {
+        if (citizen == null) {
+            throw new NullObjectException("В метод deleteCitizen передан пустой объект");
+        } else {
+            citizens.remove(citizen);
+            System.out.println("'" + citizen.getName() + "' покидает город '" + getName() + "'");
+        }
     }
 
-    public void addStreet(Street street) {
-        streets.add(street);
+    public void addStreet(Street street) throws NullObjectException {
+        if (street == null) {
+            throw new NullObjectException("В метод addStreet передан пустой объект");
+        } else {
+            streets.add(street);
+            System.out.println("Улица '" + street.getName() + "' находится в городе '" + getName() + "'");
+        }
     }
 
     public void setWeather() {
+        final double BAD_WEATHER_PROBABILITY = 0.1;
         //Климат замечательный, поэтому погода хорошая в 90% случаев
-        goodWeather = Math.random() > 0.1;
+        if (Math.random() > BAD_WEATHER_PROBABILITY) {
+            goodWeather = true;
+            System.out.println("Погода в городе '" + getName() + "' просто прекрасная!");
+        } else {
+            goodWeather = false;
+            System.out.println("Город '" + getName() + "' превратился в спб, погода соответствующая.");
+        }
     }
 
     public boolean getWeather() {
@@ -87,7 +104,6 @@ public class City implements Observable {
 
         return getName().equals(city.getName()) &&
                 citizens.equals(city.citizens) &&
-                Arrays.equals(riches, city.riches) &&
                 streets.equals(city.streets) &&
                 beMostBeatiful == city.beMostBeatiful &&
                 goodWeather == city.goodWeather;
@@ -95,7 +111,7 @@ public class City implements Observable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(citizens, Arrays.hashCode(riches), streets);
+        return Objects.hash(citizens, streets);
     }
 
     @Override
