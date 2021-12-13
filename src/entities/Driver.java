@@ -1,12 +1,13 @@
 package entities;
 
+import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
 
 public class Driver extends Person {
     private Infrastructure currentPlace;
-    private double money;
+    public double money;
     public boolean hasCar;
 
     public Driver(String name) {
@@ -44,21 +45,8 @@ public class Driver extends Person {
         System.out.println("Автолюбители дают сигнал");
         if (Objects.equals(waiter.getName(), "Официант")) {
             waiter.jumpOut();
-            waiter.serveLunch();
+            waiter.serveLunch(this);
         }
-    }
-
-    @Override
-    public void stopWalking(WalkablePlace place) {
-        System.out.println("Водитель нагулялся в месте: '" + this.currentPlace.getName() + "'");
-        currentPlace.deleteWalker(this);
-        this.currentPlace = null;
-    }
-
-    @Override
-    public void walkBy(WalkablePlace place) {
-        System.out.println("Водитель прогуливается в месте '" + place.getName() + "'");
-        place.addWalker(this);
     }
 
     @Override
