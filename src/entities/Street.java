@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.InvalidNameException;
 import utilities.*;
 
 import java.util.Objects;
@@ -10,16 +11,24 @@ public class Street implements ObjectInterface {
     private boolean dragOnShore;
     private City location;
 
-    public Street(String name) {
-        this.name = name;
-        joinStory();
+    public Street(String name) throws InvalidNameException {
+        if (name.isEmpty() || name == null) {
+            throw new InvalidNameException("Название улицы некорректно");
+        } else {
+            this.name = name;
+            joinStory();
+        }
     }
 
-    public Street(String name, City city, boolean beTheBiggest) {
-        this.name = name;
-        this.beTheBiggest = true;
-        this.setLocation(city);
-        joinStory();
+    public Street(String name, City city, boolean beTheBiggest) throws InvalidNameException {
+        if (name.isEmpty() || name == null) {
+            throw new InvalidNameException("Название улицы некорректно");
+        } else {
+            this.name = name;
+            this.beTheBiggest = true;
+            this.setLocation(city);
+            joinStory();
+        }
     }
 
     public void drag() {
