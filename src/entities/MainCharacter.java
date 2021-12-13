@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
@@ -17,33 +18,26 @@ public class MainCharacter extends Person {
         joinStory();
     }
 
-    public void stopNearTheRestaurant(RestaurantAbstract rest) {
-        this.currentPlace = rest;
-        System.out.println(getName() + " остановился около ресторана: '" + this.currentPlace.getName() + "'");
+    public void stopNearTheRestaurant(RestaurantAbstract rest) throws NullObjectException {
+        if (rest == null) {
+            throw new NullObjectException("В метод stopNearTheRestaurant передан пустой объект");
+        } else {
+            this.currentPlace = rest;
+            System.out.println(getName() + " остановился около ресторана: '" + this.currentPlace.getName() + "'");
+        }
     }
 
-    public void serveLunch() {
-        System.out.println(getName() + " подает обед прямо в машину");
+    public void serveLunch(Driver driver) {
+        driver.money -= 100;
+        System.out.println(getName() + " подает обед прямо в машину водителю '" + driver.getName() + "'");
     }
 
     private void joinStory() {
-        System.out.println("Персонаж '" + getName() + "' присоединилась к истории.");
+        System.out.println("Персонаж '" + getName() + "' присоединился к истории.");
     }
 
     public RestaurantAbstract getCurrentPlace() {
         return currentPlace;
-    }
-
-    @Override
-    public void stopWalking(WalkablePlace place) {
-        System.out.println(getName() + " нагулялся");
-        place.deleteWalker(this);
-    }
-
-    @Override
-    public void walkBy(WalkablePlace place) {
-        System.out.println(getName() + " начал гулять в месте: '" + place.getName() + "'");
-        place.addWalker(this);
     }
 
     public void jumpOut() {
