@@ -1,61 +1,30 @@
 package entities;
 
+import exceptions.NullObjectException;
 import utilities.*;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class Infrastructure implements WalkablePlace {
-    private final String name;
-    private StreetSideType streetSide;
-    private boolean hasWalkers;
-    private ArrayList<Person> currentWalkers = new ArrayList<>();
+public class Infrastructure extends WalkablePlace {
 
     public Infrastructure(String name) {
-        this.name = name;
+        super(name);
         this.streetSide = StreetSideType.RIGHT_SIDE;
         joinStory();
     }
 
     public Infrastructure(String name, StreetSideType streetSide) {
-        this.name = name;
+        super(name);
         this.streetSide = streetSide;
         joinStory();
     }
 
-    public void addWalker(Person walker) {
-        this.currentWalkers.add(walker);
-        this.hasWalkers = true;
-    }
-
-    public void deleteWalker(Person walker) {
-        this.currentWalkers.remove(walker);
-        if (this.currentWalkers.isEmpty()) {
-            this.hasWalkers = false;
-        }
-    }
-
     private void joinStory() {
-        System.out.println("Заведение '" + name + "' присоединилось к истории.");
+        System.out.println("Заведение '" + getName() + "' присоединилось к истории.");
     }
 
     public boolean isHasWalkers() {
         return this.hasWalkers;
-    }
-
-    @Override
-    public void setStreetSide(StreetSideType streetSide) {
-        this.streetSide = streetSide;
-    }
-
-    @Override
-    public StreetSideType getStreetSide() {
-        return streetSide;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -65,7 +34,7 @@ public class Infrastructure implements WalkablePlace {
             for (Person walker : currentWalkers) {
                 namesOfCurrentWalkers.append(walker.getName()).append(", ");
             }
-            return "Infrastructure '" + name + "', current walkers: " + namesOfCurrentWalkers;
+            return "Infrastructure '" + getName() + "', current walkers: " + namesOfCurrentWalkers;
         }
         return "Infrastructure without walkers";
     }
@@ -85,6 +54,6 @@ public class Infrastructure implements WalkablePlace {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, streetSide, hasWalkers, currentWalkers);
+        return super.hashCode() + getName().hashCode();
     }
 }
