@@ -24,61 +24,43 @@ public class Main {
 
         City lp = new City("Лос-Паганос");
 
-        Rich[] riches = new Rich[]{new Rich("1"),
-                new Rich("2"),
-                new Rich("3"),
-                new Rich("4"),
-                new Rich("5"),
-                new Rich("6"),
-                new Rich("7"),
-                new Rich("8"),
-                new Rich("9"),
-                new Rich("10"),
-                new Rich("11"),
-                new Rich("12")};
-        for (Rich rich : riches) {
-            if (lp.getWeather()) {
-                try {
-                    rich.setHome(lp);
-                } catch (ToManyRichesException e) {
-                    System.out.println("В этом городе уже хватает богачей");
-                    break;
-                }
-            }
-            lp.setWeather();
-        }
+        lp.addCitizen(new Rich("a"));
+        lp.addCitizen(new Rich("b"));
+        lp.addCitizen(new Rich("c"));
+        lp.addCitizen(new Rich("d"));
+        lp.addCitizen(new Rich("e"));
 
         Street street = new Street("Самая большая и красивая ", lp, true);
         street.drag();
 
-        Institution[] institutions = new Institution[]{new Institution("магазины", StreetSideType.RIGHT_SIDE),
-                new Institution("рестораны", StreetSideType.RIGHT_SIDE),
-                new Institution("столовые", StreetSideType.RIGHT_SIDE),
-                new Institution("гостиницы", StreetSideType.RIGHT_SIDE),
-                new Institution("кинотеатры", StreetSideType.RIGHT_SIDE),
-                new Institution("весёлые балаганчики", StreetSideType.RIGHT_SIDE),
-                new Institution("подземные гаражи", StreetSideType.RIGHT_SIDE),
-                new Institution("бензозаправочные станции", StreetSideType.RIGHT_SIDE)};
+        Institution[] institutions = new Institution[]{new Institution("магазины", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("рестораны", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("столовые", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("гостиницы", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("кинотеатры", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("весёлые балаганчики", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("подземные гаражи", WalkablePlace.StreetSideType.RIGHT_SIDE),
+                new Institution("бензозаправочные станции", WalkablePlace.StreetSideType.RIGHT_SIDE)};
         House house = new House();
         house.fillHouse(institutions);
         house.showHouseContent();
 
         Walker shorty = new Walker("Коротышка");
-        Infrastructure[] infrastructure = new Infrastructure[]{new Infrastructure("Пляжи"),
-                new Infrastructure("купальни"),
-                new Infrastructure("ныряльные вышки"),
-                new Infrastructure("лодочные и пароходные пристани"),
-                new Infrastructure("плавучие рестораны"),
-                new Infrastructure("морские качели и карусели"),
-                new Infrastructure("чертовы водяные колеса"),
-                new Infrastructure("параболоиды")};
+        Infrastructure[] infrastructure = new Infrastructure[]{new Infrastructure("Пляжи", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("купальни", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("ныряльные вышки", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("лодочные и пароходные пристани", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("плавучие рестораны", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("морские качели и карусели", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("чертовы водяные колеса", WalkablePlace.StreetSideType.LEFT_SIDE),
+                new Infrastructure("параболоиды", WalkablePlace.StreetSideType.LEFT_SIDE)};
         for (Infrastructure inf : infrastructure) {
             shorty.walkBy(inf);
             shorty.stopWalking(inf);
         }
 
-        CommonRestaurant cr = new CommonRestaurant("Обычный ресторан", StreetSideType.LEFT_SIDE);
-        FoodStation fs = new FoodStation(StreetSideType.LEFT_SIDE);
+        CommonRestaurant cr = new CommonRestaurant("Обычный ресторан");
+        FoodStation fs = new FoodStation();
 
         MainCharacter ponchik = new MainCharacter("Пончик");
         Infrastructure shore = new Infrastructure("побережье");
