@@ -9,7 +9,7 @@ public class Sea implements Observable {
     private final String name;
 
     public Sea(String name) throws InvalidNameException {
-        if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+        if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
             throw new InvalidNameException("Название моря некорректно");
         } else {
             this.name = name;
@@ -22,7 +22,7 @@ public class Sea implements Observable {
         private final ArrayList<City> coastalCities = new ArrayList<>();
 
         public Bay(String name) throws InvalidNameException {
-            if (name.matches(".*\\d+.*")  || name.isEmpty() || name == null) {
+            if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
                 throw new InvalidNameException("Название залива некорректно");
             } else {
                 this.name = name;
