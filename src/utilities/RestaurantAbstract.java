@@ -1,6 +1,7 @@
 package utilities;
 
 import entities.MainCharacter;
+import exceptions.InvalidNameException;
 
 import java.util.Objects;
 
@@ -8,8 +9,12 @@ public abstract class RestaurantAbstract {
     private final String name;
     private boolean isCommon;
 
-    public RestaurantAbstract(String name) {
-        this.name = name;
+    public RestaurantAbstract(String name) throws InvalidNameException {
+        if (name.isEmpty() || name == null) {
+            throw new InvalidNameException("Название ресторана некорректно");
+        } else {
+            this.name = name;
+        }
     }
 
     public String getName() {
@@ -31,10 +36,6 @@ public abstract class RestaurantAbstract {
     protected void setCommon(boolean common) {
         this.isCommon = common;
     }
-
-    public abstract void setStreetSide(StreetSideType ss);
-
-    public abstract StreetSideType getStreetSide();
 
     @Override
     public String toString() {
