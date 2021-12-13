@@ -1,12 +1,11 @@
 package entities;
 
+import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
 
 public class FoodStation extends RestaurantAbstract {
-    private StreetSideType streetSide;
-
 
     public FoodStation() {
         super("Пищезаправочная станция");
@@ -14,9 +13,8 @@ public class FoodStation extends RestaurantAbstract {
         joinStory();
     }
 
-    public FoodStation(StreetSideType streetSide) {
-        super("Пищезаправочная станция");
-        this.streetSide = streetSide;
+    public FoodStation(String name) {
+        super(name);
         setCommon(false);
         joinStory();
     }
@@ -35,13 +33,17 @@ public class FoodStation extends RestaurantAbstract {
     }
 
     @Override
-    public void getOutsideServiceAvialability(MainCharacter waiter) {
-        if (this.hasOutsideService()) {
-            System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
-            Driver driver = new Driver("Олег");
-            driver.beHappy(waiter);
+    public void getOutsideServiceAvialability(MainCharacter waiter) throws NullObjectException {
+        if (waiter == null) {
+            throw new NullObjectException("В метод getOutsideServiceAvialability передан пустой объект");
         } else {
-            System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
+            if (this.hasOutsideService()) {
+                System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
+                Driver driver = new Driver("Олег");
+                driver.beHappy(waiter);
+            } else {
+                System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
+            }
         }
     }
 
@@ -51,24 +53,8 @@ public class FoodStation extends RestaurantAbstract {
     }
 
     @Override
-    public void setStreetSide(StreetSideType ss) {
-        streetSide = ss;
-    }
-
-    @Override
-    public StreetSideType getStreetSide() {
-        return streetSide;
-    }
-
-    @Override
     public String toString() {
-        if (streetSide.equals(StreetSideType.LEFT_SIDE)) {
-            return "Food station '" + getName() + "', street side: LEFT, has outside service: '" + hasOutsideService() + "'";
-        }
-        if (streetSide.equals(StreetSideType.RIGHT_SIDE)) {
-            return "Food station '" + getName() + "', street side: RIGHT, has outside service: '" + hasOutsideService() + "'";
-        }
-        return "UNDETECTED";
+        return "Food station '" + getName() + "'";
     }
 
     @Override
@@ -78,11 +64,11 @@ public class FoodStation extends RestaurantAbstract {
         if (getClass() != obj.getClass()) return false;
         FoodStation fs = (FoodStation) obj;
 
-        return getName().equals(fs.getName()) && streetSide.equals(fs.streetSide);
+        return getName().equals(fs.getName());
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + Objects.hash(streetSide);
+        return super.hashCode() + getName().hashCode();
     }
 }
