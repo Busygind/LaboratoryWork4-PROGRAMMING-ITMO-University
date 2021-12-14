@@ -18,13 +18,12 @@ public class MainCharacter extends Person {
         joinStory();
     }
 
-    public void stopNearTheRestaurant(RestaurantAbstract rest) throws NullObjectException {
+    public void stopNearTheRestaurant(RestaurantAbstract rest) {
         if (rest == null) {
             throw new NullObjectException("В метод stopNearTheRestaurant передан пустой объект");
-        } else {
-            this.currentPlace = rest;
-            System.out.println(getName() + " остановился около ресторана: '" + this.currentPlace.getName() + "'");
         }
+        this.currentPlace = rest;
+        System.out.println(getName() + " остановился около ресторана: '" + this.currentPlace.getName() + "'");
     }
 
     public void serveLunch(Driver driver) {
