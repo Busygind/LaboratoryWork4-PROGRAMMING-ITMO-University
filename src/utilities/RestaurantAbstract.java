@@ -9,12 +9,11 @@ public abstract class RestaurantAbstract {
     private final String name;
     private boolean isCommon;
 
-    public RestaurantAbstract(String name) throws InvalidNameException {
-        if (name.isEmpty() || name == null) {
+    public RestaurantAbstract(String name) {
+        if (name == null || name.isEmpty()) {
             throw new InvalidNameException("Название ресторана некорректно");
-        } else {
-            this.name = name;
         }
+        this.name = name;
     }
 
     public String getName() {
