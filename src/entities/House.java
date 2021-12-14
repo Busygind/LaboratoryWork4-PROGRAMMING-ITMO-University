@@ -53,27 +53,8 @@ public class House implements ObjectInterface {
         return Objects.hash(institutions);
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder institutionsInfo = new StringBuilder();
-//        if (!institutions.isEmpty()) {
-//            for (Institution institution : institutions) {
-//                institutionsInfo.append(institution.toString()).append(", ");
-//            }
-//            if (streetSide.equals(StreetSideType.LEFT_SIDE)) {
-//                return "House '" + getName() + "', street side: LEFT, information about institutions: " + institutionsInfo;
-//            }
-//            if (streetSide.equals(StreetSideType.RIGHT_SIDE)) {
-//                return "House '" + getName() + "', street side: RIGHT, information about institutions: " + institutionsInfo;
-//            }
-//            return "UNDETECTED";
-//        }
-//        if (streetSide.equals(StreetSideType.LEFT_SIDE)) {
-//            return "House '" + getName() + "', street side: LEFT, has not institutions";
-//        }
-//        if (streetSide.equals(StreetSideType.RIGHT_SIDE)) {
-//            return "House '" + getName() + "', street side: RIGHT, has not institutions";
-//        }
-//        return "UNDETECTED";
-//    }
+    @Override
+    public String toString() {
+        return "House with institutions: " + institutions;
+    }
 }
