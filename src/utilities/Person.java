@@ -12,7 +12,7 @@ public abstract class Person implements ObjectInterface {
     private City home;
 
     public Person(String name) throws InvalidNameException {
-        if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
+        if (name == null || name.matches(".*\\d+.*") || name.isEmpty()) {
             throw new InvalidNameException("Имя персонажа некорректно");
         } else {
             this.name = name;
@@ -24,22 +24,20 @@ public abstract class Person implements ObjectInterface {
         return name;
     }
 
-    public void stopWalking(WalkablePlace place) throws NullObjectException {
+    public void stopWalking(WalkablePlace place) {
         if (place == null) {
             throw new NullObjectException("В метод walkBy передан пустой объект");
-        } else {
-            System.out.println(getName() + " нагулялся");
-            place.deleteWalker(this);
         }
+        System.out.println(getName() + " нагулялся");
+        place.deleteWalker(this);
     }
 
-    public void walkBy(WalkablePlace place) throws NullObjectException {
+    public void walkBy(WalkablePlace place) {
         if (place == null) {
             throw new NullObjectException("В метод walkBy передан пустой объект");
-        } else {
-            System.out.println(getName() + " начал гулять в месте: '" + place.getName() + "'");
-            place.addWalker(this);
         }
+        System.out.println(getName() + " начал гулять в месте: '" + place.getName() + "'");
+        place.addWalker(this);
     }
 
     public void setHome(City city) {
@@ -48,10 +46,11 @@ public abstract class Person implements ObjectInterface {
     }
 
     public City getHome() throws HasNotHomeException {
-        if (home != null) {
+        if (home == null) {
+            throw new HasNotHomeException("Персонаж " + getName() + " числанулся после первого семестра и, очевидно, теперь у него нет дома");
+        } else {
             return home;
         }
-        throw new HasNotHomeException("Персонаж " + getName() + " числанулся после первого семестра и, очевидно, теперь у него нет дома");
     }
 
     @Override
