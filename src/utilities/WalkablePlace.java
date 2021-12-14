@@ -12,20 +12,20 @@ public abstract class WalkablePlace implements ObjectInterface {
     public StreetSideType streetSide;
     public ArrayList<Person> currentWalkers = new ArrayList<>();
 
-    public WalkablePlace(String name) throws InvalidNameException {
-        if (name.isEmpty() || name == null) {
+    public WalkablePlace(String name) {
+        if (name == null || name.isEmpty()) {
             throw new InvalidNameException("Название объекта ландшафта некорректно");
-        } else {
-            this.name = name;
         }
+        this.name = name;
     }
 
+    //Вложенный статический перечислимый класс
     public static enum StreetSideType {
         LEFT_SIDE,
         RIGHT_SIDE
     }
 
-    public void addWalker(Person walker) throws NullObjectException {
+    public void addWalker(Person walker) {
         if (walker == null) {
             throw new NullObjectException("В метод addWalker передан пустой объект");
         } else {
@@ -34,7 +34,7 @@ public abstract class WalkablePlace implements ObjectInterface {
         }
     }
 
-    public void deleteWalker(Person walker) throws NullObjectException {
+    public void deleteWalker(Person walker) {
         if (walker == null) {
             throw new NullObjectException("В метод deleteWalker передан пустой объект");
         } else {
