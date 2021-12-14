@@ -1,6 +1,5 @@
 package entities;
 
-import exceptions.NullObjectException;
 import utilities.*;
 
 import java.util.Objects;
