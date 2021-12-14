@@ -9,6 +9,7 @@ public class Main {
         sea.createBay("Залив");
         Guy guy = new Guy("Чувак");
 
+        //Анонимный класс
         Observable hill = new Observable() {
             @Override
             public void observedBy(Person person) {
@@ -73,6 +74,7 @@ public class Main {
         }
 
         MainCharacter waiter = new MainCharacter("Официант");
+
         cr.getTerraceAvailability();
         fs.getTerraceAvailability();
         fs.getOutsideServiceAvialability(waiter);
