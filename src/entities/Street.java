@@ -11,24 +11,22 @@ public class Street implements ObjectInterface {
     private boolean dragOnShore;
     private City location;
 
-    public Street(String name) throws InvalidNameException {
-        if (name.isEmpty() || name == null) {
+    public Street(String name) {
+        if (name == null || name.isEmpty()) {
             throw new InvalidNameException("Название улицы некорректно");
-        } else {
-            this.name = name;
-            joinStory();
         }
+        this.name = name;
+        joinStory();
     }
 
-    public Street(String name, City city, boolean beTheBiggest) throws InvalidNameException {
+    public Street(String name, City city, boolean beTheBiggest) {
         if (name.isEmpty() || name == null) {
             throw new InvalidNameException("Название улицы некорректно");
-        } else {
-            this.name = name;
-            this.beTheBiggest = true;
-            this.setLocation(city);
-            joinStory();
         }
+        this.name = name;
+        this.beTheBiggest = true;
+        this.setLocation(city);
+        joinStory();
     }
 
     public void drag() {
