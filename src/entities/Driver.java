@@ -1,6 +1,6 @@
 package entities;
 
-import exceptions.NullObjectException;
+import exceptions.*;
 import utilities.*;
 
 import java.util.Objects;
@@ -16,6 +16,7 @@ public class Driver extends Person {
     }
 
     public void buyCar() {
+        //Локальный класс
         class Car {
             private final double price;
 
@@ -35,6 +36,9 @@ public class Driver extends Person {
     }
 
     public void beHappy(MainCharacter waiter) {
+        if (waiter == null) {
+            throw new NullObjectException("В метод beHappy передан пустой объект");
+        }
         if (this.hasCar) {
             System.out.println("Всем автолюбителям это понравилось");
             getSignal(waiter);
@@ -42,6 +46,9 @@ public class Driver extends Person {
     }
 
     public void getSignal(MainCharacter waiter) {
+        if (waiter == null) {
+            throw new NullObjectException("В метод getSignal передан пустой объект");
+        }
         System.out.println("Автолюбители дают сигнал");
         if (Objects.equals(waiter.getName(), "Официант")) {
             waiter.jumpOut();
