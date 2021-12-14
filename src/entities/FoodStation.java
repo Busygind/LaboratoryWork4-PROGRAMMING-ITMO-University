@@ -1,6 +1,6 @@
 package entities;
 
-import exceptions.NullObjectException;
+import exceptions.*;
 import utilities.*;
 
 import java.util.Objects;
@@ -33,17 +33,16 @@ public class FoodStation extends RestaurantAbstract {
     }
 
     @Override
-    public void getOutsideServiceAvialability(MainCharacter waiter) throws NullObjectException {
+    public void getOutsideServiceAvialability(MainCharacter waiter) {
         if (waiter == null) {
             throw new NullObjectException("В метод getOutsideServiceAvialability передан пустой объект");
+        }
+        if (this.hasOutsideService()) {
+            System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
+            Driver driver = new Driver("Олег");
+            driver.beHappy(waiter);
         } else {
-            if (this.hasOutsideService()) {
-                System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
-                Driver driver = new Driver("Олег");
-                driver.beHappy(waiter);
-            } else {
-                System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
-            }
+            System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
         }
     }
 
