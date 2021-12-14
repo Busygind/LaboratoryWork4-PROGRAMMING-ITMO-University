@@ -1,12 +1,11 @@
 package entities;
 
-import exceptions.NullObjectException;
+import exceptions.*;
 import utilities.*;
 
 import java.util.Objects;
 
-// Персонаж, рассуждения которого оказались верными
-
+//Персонаж, рассуждения которого оказались верными
 public class Guy extends Person {
     private boolean calculation;
     private Observable location;
@@ -24,6 +23,7 @@ public class Guy extends Person {
     }
 
     public void verifyCalculation() {
+        //Локальный класс
         class Calculation {
             private boolean beRight;
 
@@ -32,7 +32,8 @@ public class Guy extends Person {
             }
 
             public Calculation() {
-                beRight = Math.random() > 0.5;
+                final double RIGHT_CALCULATION_PROBABILITY = 0.5;
+                beRight = Math.random() > RIGHT_CALCULATION_PROBABILITY;
             }
 
             private void verify(boolean calc) {
@@ -44,11 +45,7 @@ public class Guy extends Person {
             }
         }
         Calculation calc = new Calculation();
-        if (calc.getCalc()) {
-            calculation = true;
-        } else {
-            calculation = false;
-        }
+        calculation = calc.getCalc();
     }
 
     private void joinStory() {
@@ -60,12 +57,11 @@ public class Guy extends Person {
 
     }
 
-    public void changeLocation(Observable loc) throws NullObjectException {
+    public void changeLocation(Observable loc) {
         if (loc == null) {
             throw new NullObjectException("В метод changeLocation передан пустой объект");
-        } else {
-            this.location = loc;
         }
+        this.location = loc;
     }
 
     @Override
