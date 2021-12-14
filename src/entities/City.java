@@ -14,15 +14,14 @@ public class City implements Observable {
     private boolean beMostBeatiful;
     private boolean goodWeather;
 
-    public City(String name) throws InvalidNameException {
-        if (name.matches(".*\\d+.*") || name.isEmpty() || name == null) {
+    public City(String name) {
+        if (name == null || name.matches(".*\\d+.*") || name.isEmpty()) {
             throw new InvalidNameException("Название города некорректно");
-        } else {
-            this.name = name;
-            setBeauty();
-            setWeather();
-            joinStory();
         }
+        this.name = name;
+        setBeauty();
+        setWeather();
+        joinStory();
     }
 
     public void setBeauty() {
@@ -43,7 +42,7 @@ public class City implements Observable {
         }
     }
 
-    public void deleteCitizen(Person citizen) throws NullObjectException {
+    public void deleteCitizen(Person citizen) {
         if (citizen == null) {
             throw new NullObjectException("В метод deleteCitizen передан пустой объект");
         } else {
@@ -52,13 +51,12 @@ public class City implements Observable {
         }
     }
 
-    public void addStreet(Street street) throws NullObjectException {
+    public void addStreet(Street street) {
         if (street == null) {
             throw new NullObjectException("В метод addStreet передан пустой объект");
-        } else {
-            streets.add(street);
-            System.out.println("Улица '" + street.getName() + "' находится в городе '" + getName() + "'");
         }
+        streets.add(street);
+        System.out.println("Улица '" + street.getName() + "' находится в городе '" + getName() + "'");
     }
 
     public void setWeather() {
@@ -87,7 +85,7 @@ public class City implements Observable {
 
     @Override
     public void observedBy(Person person) {
-        System.out.println(person.getName() + " любуется морем");
+        System.out.println(person.getName() + " любуется городом '" + getName() + "'");
     }
 
     @Override
