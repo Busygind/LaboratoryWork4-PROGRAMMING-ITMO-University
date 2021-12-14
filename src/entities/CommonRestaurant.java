@@ -1,7 +1,6 @@
 package entities;
 
-import exceptions.InvalidNameException;
-import exceptions.NullObjectException;
+import exceptions.*;
 import utilities.*;
 
 import java.util.Objects;
@@ -15,7 +14,7 @@ public class CommonRestaurant extends RestaurantAbstract {
     }
 
     private void joinStory() {
-        System.out.println(getName() + " присоединились к истории.");
+        System.out.println("Обычный ресторан '" + getName() + "' присоединился к истории.");
     }
 
     public void getTerraceAvailability() {
@@ -31,14 +30,13 @@ public class CommonRestaurant extends RestaurantAbstract {
     public void getOutsideServiceAvialability(MainCharacter waiter) throws NullObjectException {
         if (waiter == null) {
             throw new NullObjectException("В метод getOutsideServiceAvialability передан пустой объект");
+        }
+        if (this.hasOutsideService()) {
+            System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
+            Driver driver = new Driver("Олег");
+            driver.beHappy(waiter);
         } else {
-            if (this.hasOutsideService()) {
-                System.out.println("В ресторане \"" + getName() + "\" можно было пообедать или позавтракать, не выходя из автомашины.");
-                Driver driver = new Driver("Олег");
-                driver.beHappy(waiter);
-            } else {
-                System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
-            }
+            System.out.println("В ресторане \"" + getName() + "\" нет обслуживания автомашин");
         }
     }
 
