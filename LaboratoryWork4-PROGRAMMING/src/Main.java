@@ -25,7 +25,7 @@ public class Main {
 
         City lp = new City("Лос-Паганос");
 
-        lp.addCitizen(null);
+        lp.addCitizen(new Rich("a"));
         lp.addCitizen(new Rich("b"));
         lp.addCitizen(new Rich("c"));
         lp.addCitizen(new Rich("d"));
